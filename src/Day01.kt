@@ -25,7 +25,20 @@ fun main() {
     }
 
     fun part2(input: List<String>): Int {
-        return input.size
+        // Keep track of calories for each elf
+        val calories = arrayListOf<Int>(0)
+
+        for (line in input) {
+            if (line.isBlank()) {
+                // Blank line -> add a new calories counter to the list (new elf)
+                calories.add(0)
+            } else {
+                // Not a blank line -> accumulate calories for current elf (last one added)
+                calories[calories.lastIndex] += line.toInt()
+            }
+        }
+        // Sort list of elves (ascending), take the last three and return their sum of calories
+        return calories.sorted().takeLast(3).sum()
     }
 
     // test if implementation meets criteria from the description, like:
@@ -34,5 +47,5 @@ fun main() {
 
     val input = readInput("Day01")
     part1(input).println()
-    // part2(input).println()
+    part2(input).println()
 }
